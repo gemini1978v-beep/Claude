@@ -65,7 +65,8 @@ export const register: Register = on => {
     return next(e)
   })
 
-  on('ui.render', { component: 'PromptHint' }, async ($, e, next) => {
+  on('ui.render', { component: 'AbovePrompt' }, async ($, e, next) => {
+    if (e.props.hasSurvey) return next(e)
     const { Box, Text } = $.ui.resolve(e)
     const last = await read($, lastAt)
     const t = await read($, now)
