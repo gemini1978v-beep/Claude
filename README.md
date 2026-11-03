@@ -15,13 +15,13 @@ Claude Code mod: one line under the prompt showing
 At the prompt of a terminal session:
 
 ```
-/plugin install cache-warmth --marketplace gemini1978v-beep/cache-warmth
+/plugin install cache-warmth --marketplace gemini1978v-beep/Claude
 ```
 
 From a shell:
 
 ```bash
-claude plugin install cache-warmth --marketplace gemini1978v-beep/cache-warmth
+claude plugin install cache-warmth --marketplace gemini1978v-beep/Claude
 ```
 
-In the desktop app, where `/plugin` does not run: click + next to the prompt box, then Plugins, Add marketplace with `gemini1978v-beep/cache-warmth`, then Add plugin.
+In the desktop app, where `/plugin` does not run: click + next to the prompt box, then Plugins, Add marketplace with `gemini1978v-beep/Claude`, then Add plugin.
