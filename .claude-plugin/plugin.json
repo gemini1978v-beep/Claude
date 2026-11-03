@@ -1,0 +1,6 @@
+{
+  "name": "cache-warmth",
+  "version": "0.1.0",
+  "description": "Band above the prompt: minutes since the last turn against the 60-minute prompt-cache TTL",
+  "types": "./types/index.d.ts"
+}

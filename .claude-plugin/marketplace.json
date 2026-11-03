@@ -1,0 +1,5 @@
+{
+  "name": "cache-warmth",
+  "owner": { "name": "gemini1978v-beep" },
+  "plugins": [{ "name": "cache-warmth", "source": "./" }]
+}
