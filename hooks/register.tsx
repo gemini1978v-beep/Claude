@@ -18,6 +18,12 @@ async function touch($: EngineInterface) {
   await update($, now, () => t)
 }
 
+// The measure event can fire before the band reads it; asking after each turn keeps the limits current.
+async function refreshLimits($: EngineInterface) {
+  const { rateLimits } = await $.session.usage()
+  if (rateLimits.length > 0) await update($, limits, () => rateLimits.map(l => ({ ...l })))
+}
+
 function bar(fraction: number) {
   const filled = Math.max(0, Math.min(WIDTH, Math.round(fraction * WIDTH)))
   return '█'.repeat(filled) + '░'.repeat(WIDTH - filled)
@@ -39,8 +45,7 @@ export const register: Register = on => {
   on('session.start', async ($, e, next) => {
     const t = await $.clock.now()
     await update($, now, () => t)
-    const usage = await $.session.usage()
-    await update($, limits, () => usage.rateLimits.map(l => ({ ...l })))
+    await refreshLimits($).catch(() => {})
     $.clock.every(30_000, async () => {
       const t = await $.clock.now()
       await update($, now, () => t)
@@ -49,7 +54,7 @@ export const register: Register = on => {
   })
 
   on('session.measure', async ($, e, next) => {
-    if (e.changed.includes('rateLimits')) {
+    if (e.rateLimits.length > 0) {
       await update($, limits, () => e.rateLimits.map(l => ({ ...l })))
     }
     return next(e)
@@ -62,6 +67,7 @@ export const register: Register = on => {
 
   on('turn.complete', async ($, e, next) => {
     await touch($)
+    await refreshLimits($).catch(() => {})
     return next(e)
   })
 
